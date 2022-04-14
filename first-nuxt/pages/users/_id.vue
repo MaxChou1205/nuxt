@@ -3,7 +3,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  validate(data) {
+    return /^[0-9]+$/.test(data.params.id)
+  },
+}
 </script>
 
 <style></style>

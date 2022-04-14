@@ -7,6 +7,7 @@ export default {
   validate(data) {
     return /^[0-9]+$/.test(data.params.id)
   },
+  layout: 'users',
 }
 </script>
 

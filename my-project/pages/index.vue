@@ -15,33 +15,9 @@ export default {
   components: {
     PostList,
   },
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        posts: [
-          {
-            id: '1',
-            title: 'First Post',
-            previewText: 'This is our first post!',
-            thumbnail:
-              'https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg',
-          },
-          {
-            id: '2',
-            title: 'Second Post',
-            previewText: 'This is our second post!',
-            thumbnail:
-              'https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg',
-          },
-        ],
-      })
-    }, 1500)
+  computed: {
+    posts: this.$store.getters.posts,
   },
-  // data() {
-  //   return {
-
-  //   }
-  // },
 }
 </script>
 

@@ -3,9 +3,7 @@
     <section class="post">
       <h1 class="post-title">{{ post.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">
-          Last updated on {{ post.updatedDate }}
-        </div>
+        <div class="post-detail">Last updated on {{ post.updatedDate }}</div>
         <div class="post-detail">Written by {{ post.author }}</div>
       </div>
       <p class="post-content">{{ post.content }}</p>
@@ -22,23 +20,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        post: {
-          id: '1',
-          title: 'First Post (ID: ' + context.route.params.id + ')',
-          previewText: 'This is our first post!',
-          author: 'Maximilian',
-          updatedDate: new Date(),
-          content:
-            'Some dummy text which is definitely not the preview text though!',
-          thumbnail:
-            'https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg',
-        },
+  asyncData(context) {
+    return axios
+      .get(
+        `https://nuxt-blog-7ff1a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${context.params.id}.json`
+      )
+      .then((res) => {
+        return { post: res.data }
       })
-    }, 1500)
   },
 }
 </script>

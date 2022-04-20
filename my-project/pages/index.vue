@@ -16,7 +16,9 @@ export default {
     PostList,
   },
   computed: {
-    posts: this.$store.getters.posts,
+    posts() {
+      return this.$store.getters.posts
+    },
   },
 }
 </script>

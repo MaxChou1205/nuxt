@@ -50,6 +50,7 @@ export default {
     baseURL:
       process.env.BASE_URL ||
       'https://nuxt-blog-7ff1a-default-rtdb.asia-southeast1.firebasedatabase.app/',
+    apiKey: process.env.API_KEY || 'AIzaSyB-G1ZQohk4R7-OMVJTw5qJGXkgKigsHMg',
   },
   router: {
     // extendRoutes(routes, resolve) {

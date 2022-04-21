@@ -21,7 +21,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@/assets/styles/animate.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -46,4 +46,22 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  env: {
+    baseURL:
+      process.env.BASE_URL ||
+      'https://nuxt-blog-7ff1a-default-rtdb.asia-southeast1.firebasedatabase.app/',
+  },
+  router: {
+    // extendRoutes(routes, resolve) {
+    //   routes.push({
+    //     path: '*',
+    //     component: resolve(__dirname, 'pages/index.vue'),
+    //   })
+    // },
+    // linkActiveClass: 'active',
+  },
+  transition: {
+    name: 'fade',
+    mode: 'out-in',
+  },
 }

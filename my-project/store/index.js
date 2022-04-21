@@ -21,9 +21,7 @@ const createStore = () => {
     actions: {
       nuxtServerInit({ commit }, context) {
         return axios
-          .get(
-            'https://nuxt-blog-7ff1a-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json'
-          )
+          .get(`${process.env.baseURL}/posts.json`)
           .then((res) => {
             const posts = []
             for (const key in res.data) {
@@ -62,10 +60,7 @@ const createStore = () => {
       addPost({ commit }, post) {
         const createdPost = { ...post, updatedDate: new Date() }
         return axios
-          .post(
-            'https://nuxt-blog-7ff1a-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',
-            { ...createdPost }
-          )
+          .post(`${process.env.baseURL}/posts.json`, { ...createdPost })
           .then((res) => {
             commit('addPost', { ...createdPost, id: res.data.name })
           })
@@ -75,10 +70,7 @@ const createStore = () => {
       },
       editPost({ commit }, post) {
         return axios
-          .put(
-            `https://nuxt-blog-7ff1a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${post.id}.json`,
-            { ...post }
-          )
+          .put(`${process.env.baseURL}/posts/${post.id}.json`, { ...post })
           .then(() => {
             commit('editPost', post)
           })

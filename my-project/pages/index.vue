@@ -8,13 +8,8 @@
 </template>
 
 <script>
-import PostList from '@/components/Posts/PostList.vue'
-
 export default {
   name: 'IndexPage',
-  components: {
-    PostList,
-  },
   computed: {
     posts() {
       return this.$store.getters.posts

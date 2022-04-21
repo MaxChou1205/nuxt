@@ -14,13 +14,8 @@
 </template>
 
 <script>
-import PostList from '@/components/Posts/PostList'
-
 export default {
   layout: 'admin',
-  components: {
-    PostList,
-  },
   computed: {
     posts() {
       return this.$store.getters.posts

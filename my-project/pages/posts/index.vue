@@ -5,12 +5,7 @@
 </template>
 
 <script>
-import PostList from '@/components/Posts/PostList.vue'
-
 export default {
-  components: {
-    PostList,
-  },
   created() {
     // this.$store.dispatch('setPosts', this.posts)
   },

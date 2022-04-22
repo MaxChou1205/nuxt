@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Vuex from 'vuex'
+import Cookie from 'js-cookie'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -20,6 +21,9 @@ const createStore = () => {
       },
       setToken(state, token) {
         state.token = token
+      },
+      clearToken(state) {
+        state.token = null
       },
     },
     actions: {
@@ -99,16 +103,61 @@ const createStore = () => {
             returnSecureToken: true,
           })
           .then((res) => {
-            console.log(res)
             commit('setToken', res.idToken)
+            localStorage.setItem('token', res.idToken)
+            localStorage.setItem(
+              'tokenExpiration',
+              new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
+            )
+            Cookie.set('jwt', res.idToken)
+            Cookie.set(
+              'expirationDate',
+              new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
+            )
           })
           .catch((e) => {
             console.log(e)
           })
       },
+      initAuth({ commit, dispatch }, req) {
+        let token = null
+        let expirationDate
+        if (req) {
+          if (!req.headers.cookie) return
+          const jwtCookie = req.headers.cookie
+            .split(';')
+            .find((c) => c.trim().startsWith('jwt='))
+          if (!jwtCookie) return
+          token = jwtCookie.split('=')[1]
+          expirationDate = req.headers.cookie
+            .split(';')
+            .find((c) => c.trim().startsWith('expirationDate='))
+            .split('=')[1]
+        } else {
+          token = localStorage.getItem('token')
+          expirationDate = localStorage.getItem('tokenExpiration')
+        }
+        if (new Date().getTime() > +expirationDate || !token) {
+          console.log('No token or invalid token')
+          dispatch('logout')
+          return
+        }
+
+        commit('setToken', token)
+      },
+      logout({ commit }) {
+        commit('clearToken')
+        Cookie.remove('jwt')
+        Cookie.remove('expirationDate')
+        if (process.client) {
+          localStorage.removeItem('token')
+          localStorage.removeItem('tokenExpiration')
+        }
+      },
     },
     getters: {
       posts: (state) => state.posts,
+      isAuth: (state) => state.token !== null,
     },
   })
 }

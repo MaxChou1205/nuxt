@@ -114,6 +114,10 @@ const createStore = () => {
               'expirationDate',
               new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
             )
+
+            return this.$axios.$post('api/', {
+              data: 'Authenticated!',
+            })
           })
           .catch((e) => {
             console.log(e)

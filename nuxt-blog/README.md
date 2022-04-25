@@ -75,3 +75,4 @@ More information about the usage of this directory in [the documentation](https:
 ### 佈署 Static App
 
 1. `yarn generate`
+2. 上傳`dist`內的項目到 static server 上

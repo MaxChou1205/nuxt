@@ -3,7 +3,9 @@
     <section class="post">
       <h1 class="post-title">{{ post.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on {{ post.updatedDate | date }}</div>
+        <div class="post-detail">
+          Last updated on {{ post.updatedDate | date }}
+        </div>
         <div class="post-detail">Written by {{ post.author }}</div>
       </div>
       <p class="post-content">{{ post.content }}</p>
@@ -24,6 +26,11 @@ import axios from 'axios'
 
 export default {
   asyncData(context) {
+    if (context.payload) {
+      return {
+        post: context.payload.postData,
+      }
+    }
     return axios
       .get(`${process.env.baseURL}/posts/${context.params.id}.json`)
       .then((res) => {

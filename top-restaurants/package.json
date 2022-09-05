@@ -8,6 +8,12 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.9"
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "eslint": "^8.7.0",
+    "eslint-plugin-vue": "^9.4.0",
+    "nuxt": "3.0.0-rc.9",
+    "prettier": "^2.5.1",
+    "vue-eslint-parser": "^8.0.0"
   }
 }

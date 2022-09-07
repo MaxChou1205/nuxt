@@ -1,5 +1,9 @@
 <template>
   <div>
+    <Head>
+      <Title>not found</Title>
+    </Head>
+
     <div class="container">
       <NuxtLayout name="error">
         <template #header>

@@ -7,10 +7,21 @@ const restaurant = restaurants.find(r => r.name === name);
 if (!restaurant) {
   router.push("/404");
 }
+
+useHead({
+  title: name as string,
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  charset: "utf-8",
+  meta: [{ name: "description", content: "My amazing site." }]
+});
 </script>
 
 <template>
   <div>
+    <Head>
+      <Title>{{ name }}</Title>
+    </Head>
+
     <div class="restaurant-container">
       <div class="image-container">
         <img :src="restaurant?.imageUrl" alt="" />

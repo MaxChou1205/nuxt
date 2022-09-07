@@ -1,17 +1,15 @@
 <template>
   <div>
     <div class="container">
-      <h1>Page not found</h1>
-      <NuxtLink to="/">Go Back</NuxtLink>
-      <!-- <NuxtLayout name="error">
+      <NuxtLayout name="error">
         <template #header>
           <h1>Page not found</h1>
         </template>
 
-        <template #redirectEl>
+        <template #action>
           <NuxtLink to="/">Go Back</NuxtLink>
         </template>
-      </NuxtLayout> -->
+      </NuxtLayout>
     </div>
   </div>
 </template>

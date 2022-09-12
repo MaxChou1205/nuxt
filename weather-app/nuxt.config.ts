@@ -1,16 +1,22 @@
-import { defineNuxtConfig } from 'nuxt'
+import {defineNuxtConfig} from 'nuxt'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  css: ["~/assets/css/tailwind.css"],
-  build: {
-    postcss: {
-      postcssOptions: {
-        plugins: {
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
+    publicRuntimeConfig: {
+        API_KEY: process.env.API_KEY
     },
-  },
+    privateRuntimeConfig: {
+        hello: 'test'
+    },
+    css: ["~/assets/css/tailwind.css"],
+    build: {
+        postcss: {
+            postcssOptions: {
+                plugins: {
+                    tailwindcss: {},
+                    autoprefixer: {},
+                },
+            },
+        },
+    },
 })

@@ -1,5 +1,6 @@
 import {db} from "../../db"
 import {v4 as uuid} from "uuid";
+import {createError, sendError} from "h3";
 
 export default defineEventHandler(async (e) => {
     const method = e.req.method
@@ -8,7 +9,13 @@ export default defineEventHandler(async (e) => {
     } else if (method === "POST") {
         const body = await useBody(e);
 
-        if (!body.item) throw new Error("key 'item' is required");
+        if (!body.item) {
+            const error = createError({
+                statusCode: 400,
+                statusMessage: "key 'item' is required",
+            })
+            sendError(e, error);
+        }
 
         const newTodo = {
             id: uuid(),

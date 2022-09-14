@@ -1,9 +1,18 @@
 import {db} from "../../db"
+import {defineEventHandler, createError, sendError} from "h3";
 
 export default defineEventHandler(async (e) => {
     const method = e.req.method;
     const context = e.context;
     const {id} = context.params;
+
+    if (!id) {
+        const error = createError({
+            statusCode: 400,
+            statusMessage: "id is required"
+        })
+        sendError(e, error);
+    }
 
     if (method === "PUT") {
         let index;
@@ -15,7 +24,16 @@ export default defineEventHandler(async (e) => {
             return false;
         })
 
-        if (!todo) throw new Error();
+        if (!todo) {
+            const error = createError({
+                statusCode: 404,
+                statusMessage: "id is not found",
+                data: {}
+            })
+
+            sendError(e, error);
+        }
+
 
         const updatedTodo = {
             ...todo,

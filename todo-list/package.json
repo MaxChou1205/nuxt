@@ -11,6 +11,7 @@
     "nuxt": "3.0.0-rc.9"
   },
   "dependencies": {
+    "@nuxt/ui": "^0.3.2",
     "uuid": "^9.0.0"
   }
 }

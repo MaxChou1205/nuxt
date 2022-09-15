@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import useSupabase from "~/composables/useSupabase";
+
+const {supabase} = useSupabase();
+</script>
+
 <template>
   <div class="container">
     <AuthCard/>

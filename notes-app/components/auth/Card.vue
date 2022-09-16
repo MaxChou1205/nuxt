@@ -2,7 +2,10 @@
 import useAuth from "~/composables/useAuth";
 
 const authState = ref<'login' | 'signup'>('login');
-const {user, signup} = useAuth();
+const email = ref('');
+const password = ref('');
+
+const {user, signup, login} = useAuth();
 
 const toggleAuthState = () => {
   if (authState.value === 'login') authState.value = 'signup';
@@ -10,7 +13,14 @@ const toggleAuthState = () => {
 }
 
 const handleSubmit = () => {
-  signup({email: "hmsymgxmmucsngflmb@nvhrw.com", password: "123456"})
+  if (authState.value === "login") {
+    login({
+      email: email.value,
+      password: password.value
+    })
+  } else {
+    signup({email: email.value, password: password.value})
+  }
 }
 </script>
 
@@ -19,11 +29,13 @@ const handleSubmit = () => {
     <NCard class="card">
       <div>
         <h3>{{ authState }}</h3>
+        {{ user }}
         <div class="input-container">
-          <input placeholder="Email"/>
+          <input placeholder="Email" v-model="email"/>
           <input
               placeholder="Password"
               type="password"
+              v-model="password"
           />
         </div>
         <NButton @click="handleSubmit">Submit</NButton>

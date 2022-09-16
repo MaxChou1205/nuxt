@@ -2,8 +2,9 @@
 import useAuth from "~/composables/useAuth";
 
 const authState = ref<'login' | 'signup'>('login');
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
+const authError = ref("");
 
 const {user, signup, login, logout} = useAuth();
 
@@ -12,14 +13,20 @@ const toggleAuthState = () => {
   else authState.value = 'login';
 }
 
-const handleSubmit = () => {
-  if (authState.value === "login") {
-    login({
-      email: email.value,
-      password: password.value
-    })
-  } else {
-    signup({email: email.value, password: password.value})
+const handleSubmit = async () => {
+  authError.value = "";
+  
+  try {
+    if (authState.value === "login") {
+      await login({
+        email: email.value,
+        password: password.value
+      })
+    } else {
+      await signup({email: email.value, password: password.value})
+    }
+  } catch (e) {
+    authError.value = e.message;
   }
 
   email.value = "";
@@ -32,7 +39,6 @@ const handleSubmit = () => {
     <NCard class="card">
       <div>
         <h3>{{ authState }}</h3>
-        {{ user }}
         <div class="input-container">
           <input placeholder="Email" v-model="email"/>
           <input
@@ -43,7 +49,7 @@ const handleSubmit = () => {
         </div>
         <NButton @click="handleSubmit">Submit</NButton>
         <NButton v-if="user" @click="logout">Logout</NButton>
-        <!--        <p class="error" v-if="authError">{{ authError }}</p>-->
+        <p class="error" v-if="authError">{{ authError }}</p>
         <p @click="toggleAuthState">
           {{
             authState === "login"

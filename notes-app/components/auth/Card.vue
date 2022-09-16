@@ -5,7 +5,7 @@ const authState = ref<'login' | 'signup'>('login');
 const email = ref('');
 const password = ref('');
 
-const {user, signup, login} = useAuth();
+const {user, signup, login, logout} = useAuth();
 
 const toggleAuthState = () => {
   if (authState.value === 'login') authState.value = 'signup';
@@ -21,6 +21,9 @@ const handleSubmit = () => {
   } else {
     signup({email: email.value, password: password.value})
   }
+
+  email.value = "";
+  password.value = "";
 }
 </script>
 
@@ -39,6 +42,7 @@ const handleSubmit = () => {
           />
         </div>
         <NButton @click="handleSubmit">Submit</NButton>
+        <NButton v-if="user" @click="logout">Logout</NButton>
         <!--        <p class="error" v-if="authError">{{ authError }}</p>-->
         <p @click="toggleAuthState">
           {{

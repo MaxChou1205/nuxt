@@ -11,24 +11,26 @@ const useAuth = () => {
 
     const signup = async ({email, password, ...metadata}) => {
         const {user: u, error} = await supabase.auth.signUp({email, password}, {data: metadata})
-
         if (error) throw error;
-
         return u;
     }
 
     const login = async ({email, password}) => {
         const {user: u, error} = await supabase.auth.signIn({email, password})
-
         if (error) throw error;
-
         return u;
+    }
+
+    const logout = async () => {
+        const {error} = await supabase.auth.signOut()
+        if (error) throw error;
     }
 
     return {
         user,
         signup,
-        login
+        login,
+        logout
     }
 }
 

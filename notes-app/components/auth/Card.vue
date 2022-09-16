@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import {useRouter} from "#app";
 import useAuth from "~/composables/useAuth";
+
+const router = useRouter();
+const {user, signup, login, logout} = useAuth();
 
 const authState = ref<'login' | 'signup'>('login');
 const email = ref("");
 const password = ref("");
 const authError = ref("");
-
-const {user, signup, login, logout} = useAuth();
+const hasSignup = ref(false);
 
 const toggleAuthState = () => {
   if (authState.value === 'login') authState.value = 'signup';
@@ -15,29 +18,30 @@ const toggleAuthState = () => {
 
 const handleSubmit = async () => {
   authError.value = "";
-  
+
   try {
     if (authState.value === "login") {
       await login({
         email: email.value,
         password: password.value
       })
+      await router.push("/profile");
     } else {
       await signup({email: email.value, password: password.value})
     }
+
+    email.value = "";
+    password.value = "";
   } catch (e) {
     authError.value = e.message;
   }
-
-  email.value = "";
-  password.value = "";
 }
 </script>
 
 <template>
   <div>
     <NCard class="card">
-      <div>
+      <div v-if="!hasSignup">
         <h3>{{ authState }}</h3>
         <div class="input-container">
           <input placeholder="Email" v-model="email"/>
@@ -58,9 +62,9 @@ const handleSubmit = async () => {
           }}
         </p>
       </div>
-      <!--      <div v-else>-->
-      <!--        <h3>Check email for confirmation message</h3>-->
-      <!--      </div>-->
+      <div v-else>
+        <h3>Check email for confirmation message</h3>
+      </div>
     </NCard>
   </div>
 </template>

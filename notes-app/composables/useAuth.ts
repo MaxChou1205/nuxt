@@ -10,7 +10,8 @@ const useAuth = () => {
     })
 
     const signup = async ({email, password, ...metadata}) => {
-        const {user: u, error} = await supabase.auth.signUp({email, password}, {data: metadata})
+        const {user: u, error} = await supabase.auth.signUp({email, password},
+            {data: metadata, redirectTo: `${window.location.protocol}/profile?source=email`})
         if (error) throw error;
         return u;
     }

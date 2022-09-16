@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import useAuth from "~/composables/useAuth";
+
 const authState = ref<'login' | 'signup'>('login');
+const {user, signup} = useAuth();
 
 const toggleAuthState = () => {
   if (authState.value === 'login') authState.value = 'signup';
   else authState.value = 'login';
+}
+
+const handleSubmit = () => {
+  signup({email: "hmsymgxmmucsngflmb@nvhrw.com", password: "123456"})
 }
 </script>
 
@@ -19,7 +26,7 @@ const toggleAuthState = () => {
               type="password"
           />
         </div>
-        <NButton>Submit</NButton>
+        <NButton @click="handleSubmit">Submit</NButton>
         <!--        <p class="error" v-if="authError">{{ authError }}</p>-->
         <p @click="toggleAuthState">
           {{

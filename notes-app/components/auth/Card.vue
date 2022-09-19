@@ -49,10 +49,10 @@ const handleSubmit = async () => {
               placeholder="Password"
               type="password"
               v-model="password"
+              @keyup.enter="handleSubmit"
           />
         </div>
         <NButton @click="handleSubmit">Submit</NButton>
-        <NButton v-if="user" @click="logout">Logout</NButton>
         <p class="error" v-if="authError">{{ authError }}</p>
         <p @click="toggleAuthState">
           {{

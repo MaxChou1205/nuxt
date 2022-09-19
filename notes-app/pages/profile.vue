@@ -10,11 +10,15 @@ const {supabase} = useSupabase();
 const {user} = useAuth();
 const notesResponse = ref();
 
-if (process.client) {
-  fetchData();
-}
+onMounted(() => {
+  {
+    if (process.client) {
+      fetchData();
+    }
+  }
+})
 
-const fetchData = () => {
+const fetchData = async () => {
   notesResponse.value = await supabase.from("notes").select().eq("user_id", user.value.id)
 }
 </script>
@@ -22,7 +26,7 @@ const fetchData = () => {
 <template>
   <div class="container">
     <h3>My Notes</h3>
-    <NotesForm/>
+    <NotesForm :submit="fetchData"/>
     <div class="card-container" v-if="notesResponse?.data">
       <NCard class="card" v-for="note in notesResponse.data" :key="note.id">
         <h2>{{ note.title }}</h2>

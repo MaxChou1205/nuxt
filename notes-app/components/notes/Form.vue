@@ -3,6 +3,9 @@ import {reactive} from "#imports";
 
 const {supabase} = useSupabase();
 const {user} = useAuth();
+const props = defineProps(['submit']
+)
+
 
 const notesInput = reactive({
   title: "",
@@ -20,6 +23,7 @@ const handleSubmit = async () => {
 
   notesInput.title = "";
   notesInput.note = "";
+  props.submit();
 }
 </script>
 
